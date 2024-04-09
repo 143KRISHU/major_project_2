@@ -2,11 +2,11 @@
   "name": "majorproject_3",
   "version": "1.0.0",
   "description": "backend javascript",
-  "type" :"module",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "nodemon src/index.js"
+    "dev": "nodemon src/index.js"
   },
   "author": "Rishabh Gupta",
   "license": "ISC",
@@ -14,6 +14,7 @@
     "express": "^4.19.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5"
   }
 }
