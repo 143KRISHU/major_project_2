@@ -1,17 +1,17 @@
 import dotenv from "dotenv"
 import connectDB from "./db/index.js";
-
+const port = process.env.PORT || 8000;
 dotenv.config({
     path:'.env'
 })
 
 connectDB()
 .then(()=>{
-    app.listen(process.env.PORT || 8000,()=>{
-        console.log("Server is listening.....")
+    app.listen(port,()=>{
+        console.log(`Server is running at ${port}`)
     })
 }
 )
 .catch((err)=>{
-    console.log("MOMGO db connection failed !!! ", error);
+    console.log("MOMGO db connection failed !!! ", err);
 })
