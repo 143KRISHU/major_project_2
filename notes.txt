@@ -35,3 +35,5 @@ const app = express();
     }
 
 */
+
+// As express give the access of req.body simillary multer give the access of req.files
