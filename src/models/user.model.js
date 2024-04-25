@@ -1,6 +1,10 @@
 import mongoose ,{Schema} from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+dotenv.config({
+    path:'.env'
+})
 const userSchema  = new Schema ({
     userName:{
         type:String,
@@ -56,6 +60,7 @@ userSchema.pre("save",async function (next) {
 
     if(!this.isModified("password")) return next();
     this.password = await bcrypt.hash(this.password,10);
+    console.log(this.password);
     next()
 })
 
