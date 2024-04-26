@@ -6,7 +6,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const generateAccessAndRefreshTokens = async (userId) => {
       try {
-            const user = await User.findById( userId );
+            const user = await User.findById(userId);
             const accessToken = user.generateAccessToken();
             const refreshToken = user.generateRefreshToken();
             user.refreshToken = refreshToken;
@@ -98,12 +98,13 @@ const userLogin = asyncHandler(async (req, res, next) => {
       // send the tokens in secure cookies
 
       let { email, password, username } = req.body;
+      console.log(req.body);
       if (username === "" && email === "") {
             throw new ApiError(400, "Enter Either Username or Email yo proceed login ");
       }
-           const userFound = await User.findOne({ $or: [{ email: email }, { userName: username }] });
+      const userFound = await User.findOne({ $or: [{ email: email }, { userName: username }] });
 
-      if (!userFound && username !== "") {
+      if (!userFound && username !== undefined) {
             throw new ApiError(404, `${username} doesn't exist`);
       }
       if (!userFound && email !== "") {
@@ -123,7 +124,7 @@ const userLogin = asyncHandler(async (req, res, next) => {
       const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(userFound._id);
 
       const userLoggedIn = await User.findById(userFound._id)
-      .select("-password -refreshToken ");
+            .select("-password -refreshToken ");
       // Setting up the cookie
 
       const options = {
@@ -149,7 +150,7 @@ const userLogin = asyncHandler(async (req, res, next) => {
 })
 
 const userLogout = asyncHandler(async (req, res) => {
-     await User.findOneAndUpdate(req.user._id,
+      await User.findOneAndUpdate(req.user._id,
 
             {
                   $set: {
@@ -167,13 +168,14 @@ const userLogout = asyncHandler(async (req, res) => {
       }
 
       return res
-      .status(200)
-      .clearCookie("accessToken",options)
-      .clearCookie("refreshToken",options)
-      .json(
-            200,{},
-            message = "User Logged Out SuccessFully"
-      )
+            .status(200)
+            .clearCookie("accessToken", options)
+            .clearCookie("refreshToken", options)
+            .json(new ApiResponse(
+                        200, 
+                        {},
+                        "User Logged Out SuccessFully")
+            )
 });
 
 export {
